@@ -10,3 +10,5 @@
 *.class
 *.class
 *.class
+target/classes/com/gt/demo/notification/adapter/inbound/NotificationConsumer.class
+target/classes/com/gt/demo/notification/NotificationApplication.class
