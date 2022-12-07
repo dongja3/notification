@@ -6,3 +6,7 @@
 .idea/encodings.xml
 .idea/jarRepositories.xml
 .idea/uiDesigner.xml
+*.class
+*.class
+*.class
+*.class
