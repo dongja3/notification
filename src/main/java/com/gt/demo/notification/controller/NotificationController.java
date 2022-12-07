@@ -4,6 +4,7 @@ import com.gt.demo.notification.dto.NotificationRequest;
 import com.gt.demo.notification.dto.NotificationResponse;
 import com.gt.demo.notification.model.NotificationHistory;
 import com.gt.demo.notification.service.NotificationHistoryService;
+import com.gt.demo.notification.service.NotificationService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +20,10 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class NotificationController {
 
-    @Autowired
     private final QueueChannel queueChannel;
-    @Autowired
     private final NotificationHistoryService notificationHistoryService;
+
+    private final NotificationService notificationService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -32,6 +33,13 @@ public class NotificationController {
         NotificationHistory notificationHistory =NotificationHistory.builder().jsonMessage(notificationRequest.getMessage())
                 .status("Received").build();
         notificationHistoryService.create(notificationHistory);
+        return new NotificationResponse();
+    }
+
+    @PostMapping("/sendmsg")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public NotificationResponse sendNotificationMessage(@RequestBody NotificationRequest notificationRequest){
+        notificationService.sendNotificationMessage(notificationRequest);
         return new NotificationResponse();
     }
 
