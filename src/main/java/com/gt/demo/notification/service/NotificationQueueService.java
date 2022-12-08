@@ -15,8 +15,7 @@ public class NotificationQueueService {
 
     @Scheduled(fixedDelay = 1000)
     public void distributeNotification(){
-        log.info("$$$$$$$Start distribute message");
         Message message = queueChannel.receive();
-        log.info("$$$$$$$message {} distributed", message.getPayload());
+        log.info("====message distributed：{}", message.getPayload());
     }
 }
