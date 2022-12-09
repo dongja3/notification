@@ -15,6 +15,6 @@ http://localhost/api/notification/sendmsg
 {
     "type":"sms",
     "receiver":"1301020202020",
-    "message": "hello from sync call"
+    "message": "hello from async call"
 }
 ```
