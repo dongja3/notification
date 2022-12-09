@@ -10,6 +10,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class NotificationRequest implements Serializable {
+    private String appName;
     private String type;
     private String receiver;
     private String message;
