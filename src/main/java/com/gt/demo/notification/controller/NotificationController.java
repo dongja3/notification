@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class NotificationController {
 
-    private final QueueChannel queueChannel;
+
     private final NotificationHistoryService notificationHistoryService;
 
     private final NotificationService notificationService;
@@ -29,7 +29,7 @@ public class NotificationController {
     @ResponseStatus(HttpStatus.CREATED)
     public NotificationResponse createNotification(@RequestBody NotificationRequest notificationRequest){
         Message<String> message = buildNotificationMessage(notificationRequest);
-        queueChannel.send(message);
+        notificationService.sendNotificationToQueue(message);
         NotificationHistory notificationHistory =NotificationHistory.builder().jsonMessage(notificationRequest.getMessage())
                 .status("Received").build();
         notificationHistoryService.create(notificationHistory);

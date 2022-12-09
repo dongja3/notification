@@ -6,7 +6,9 @@ import com.gt.demo.notification.service.NotificationService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.integration.channel.QueueChannel;
 import org.springframework.jms.core.JmsTemplate;
+import org.springframework.messaging.Message;
 import org.springframework.stereotype.Service;
 import static  com.gt.demo.notification.config.ActiveMQConfig.NTF_QUEUE;
 
@@ -15,6 +17,7 @@ import static  com.gt.demo.notification.config.ActiveMQConfig.NTF_QUEUE;
 @Slf4j
 public class NotificationServiceImpl implements NotificationService {
 
+    private final QueueChannel queueChannel;
     @Autowired
     private JmsTemplate jmsTemplate;
 
@@ -22,5 +25,10 @@ public class NotificationServiceImpl implements NotificationService {
     public void sendNotificationMessage(NotificationRequest notificationRequest) {
         log.info("sending with convertAndSend() to queue <" + NTF_QUEUE + ">");
         jmsTemplate.convertAndSend(NTF_QUEUE, notificationRequest);
+    }
+
+    @Override
+    public void sendNotificationToQueue(Message message) {
+        queueChannel.send(message);
     }
 }
