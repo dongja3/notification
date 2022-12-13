@@ -1,0 +1,1 @@
+# ref to https://swagger.io/docs/specification for detail spec

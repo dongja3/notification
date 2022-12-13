@@ -1,0 +1,78 @@
+openapi: 3.0.3
+info:
+  title: notification api
+  description: notification api
+  version: 1.0.0
+  contact:
+    email: dong@github.com
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/gt/notification/1.0.0
+paths:
+  /notification:
+    post:
+      summary: returns whether notification is created
+      description: generate notification according to upstream system request.
+      operationId: createNotification
+      tags:
+        - notification
+      responses:
+        200:
+          description: create notification successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationResponse'
+              examples:
+                received: true
+        default:
+          description: 'Error Response for 400 and 500'
+          content:
+            application/json:
+              examples:
+                RequestInvalid:
+                  value:
+                    status: 400
+                    errors:
+                      - code: INVALID_REQUEST
+                        message: Invalid request
+                        fields: [ ]
+                    timeStamp: '2022-08-01T20:59:01.110Z'
+                    traceId: ABC-DEF-GHI-JKL
+                ServerError:
+                  value:
+                    status: 500
+                    errors:
+                      - code: INTERNAL_SERVER_ERROR
+                        message: Internal server error
+                        fields: [ ]
+                    timeStamp: '2022-08-01T20:59:01.11Z'
+                    traceId: ABC-DEF-GHI-JKL
+      x-error-codes:
+        - INVALID_REQUEST
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationRequest'
+components:
+  schemas:
+    CreateNotificationParam:
+      title: NotificationRequest
+      type: object
+      properties:
+        dtlNum:
+          type: string
+        custCode:
+          type: string
+        custName:
+          type: string
+        status:
+          type: string
+    CreateNotificationResult:
+      type: object
+      properties:
+        received:
+          type: boolean
